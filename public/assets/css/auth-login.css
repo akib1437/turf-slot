@@ -1,0 +1,5 @@
+/* Login page small tweaks */
+.auth-card {
+  max-width: 420px;
+  margin: 40px auto;
+}
