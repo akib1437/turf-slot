@@ -43,3 +43,4 @@ function createUser($name, $email, $phone, $passwordHash, $role) {
     }
     return ["ok" => false, "error" => "Registration failed. Try again."];
 }
+
