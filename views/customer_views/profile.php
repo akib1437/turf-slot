@@ -27,6 +27,7 @@ $err = $_GET["err"] ?? "";
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TurfSlot - Customer Profile</title>
+  <link rel="stylesheet" href="../common_views/css/styles.css">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/script.js" defer></script>
 </head>
