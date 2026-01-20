@@ -29,3 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+function confirmCancel() {
+  return confirm("Cancel this booking request? Only Pending can be cancelled.");
+}
