@@ -13,12 +13,10 @@ function clean($v) {
     return trim($v);
 }
 
-// Must be logged in
 if (!isset($_SESSION["user_id"])) {
     redirectTo("../views/common_views/login.php?err=Please login first");
 }
 
-// For Day 4: only customer can request booking
 if ($_SESSION["role"] !== "customer") {
     redirectTo("../views/common_views/login.php?err=Access denied");
 }
@@ -28,25 +26,40 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 $action = $_POST["action"] ?? "";
-
-if ($action !== "request_booking") {
-    redirectTo("../views/customer_views/home.php?err=Invalid action");
-}
-
 $userId = (int)$_SESSION["user_id"];
-$slotId = (int)($_POST["slot_id"] ?? 0);
-$teamName = clean($_POST["team_name"] ?? "");
-$phone = clean($_POST["phone"] ?? "");
 
-if ($slotId <= 0 || $teamName === "" || $phone === "") {
-    redirectTo("../views/customer_views/requestBooking.php?slot_id=" . $slotId . "&err=Please fill all fields");
+/* ===== Request Booking (Day 4) ===== */
+if ($action === "request_booking") {
+    $slotId = (int)($_POST["slot_id"] ?? 0);
+    $teamName = clean($_POST["team_name"] ?? "");
+    $phone = clean($_POST["phone"] ?? "");
+
+    if ($slotId <= 0 || $teamName === "" || $phone === "") {
+        redirectTo("../views/customer_views/requestBooking.php?slot_id=" . $slotId . "&err=Please fill all fields");
+    }
+
+    $res = createBookingRequest($userId, $slotId, $teamName, $phone);
+
+    if ($res["ok"]) {
+        redirectTo("../views/customer_views/myBookings.php?msg=request_sent");
+    } else {
+        redirectTo("../views/customer_views/requestBooking.php?slot_id=" . $slotId . "&err=" . urlencode($res["error"]));
+    }
 }
 
-$res = createBookingRequest($userId, $slotId, $teamName, $phone);
+/* ===== Cancel Pending (Day 5) ===== */
+if ($action === "cancel_booking") {
+    $bookingId = (int)($_POST["booking_id"] ?? 0);
+    if ($bookingId <= 0) {
+        redirectTo("../views/customer_views/myBookings.php?err=Invalid booking");
+    }
 
-if ($res["ok"]) {
-    // Day 5 will build myBookings.php, but for now redirect to home with msg
-    redirectTo("../views/customer_views/home.php?msg=request_sent");
-} else {
-    redirectTo("../views/customer_views/requestBooking.php?slot_id=" . $slotId . "&err=" . urlencode($res["error"]));
+    $res = cancelPendingBooking($bookingId, $userId);
+    if ($res["ok"]) {
+        redirectTo("../views/customer_views/myBookings.php?msg=cancelled");
+    } else {
+        redirectTo("../views/customer_views/myBookings.php?err=" . urlencode($res["error"]));
+    }
 }
+
+redirectTo("../views/customer_views/home.php?err=Invalid action");
