@@ -44,3 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+function confirmApprove() {
+  return confirm("Approve this booking request?");
+}
+
+function confirmReject() {
+  return confirm("Reject this booking request?");
+}
