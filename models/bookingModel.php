@@ -78,3 +78,69 @@ function createBookingRequest($userId, $slotId, $teamName, $phone) {
     if ($ok) return ["ok" => true];
     return ["ok" => false, "error" => "Failed to request booking."];
 }
+// ===== Day 5 additions =====
+
+function getBookingsByUser($userId) {
+    $conn = dbConnect();
+
+    $sql = "SELECT 
+                b.id AS booking_id,
+                b.team_name,
+                b.phone,
+                b.status,
+                b.created_at,
+                s.slot_date,
+                s.start_time,
+                s.end_time
+            FROM bookings b
+            INNER JOIN slots s ON b.slot_id = s.id
+            WHERE b.user_id = ?
+            ORDER BY s.slot_date DESC, s.start_time DESC, b.created_at DESC";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param(\"i\", $userId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $bookings = [];
+    while ($row = $result->fetch_assoc()) {
+        $bookings[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $bookings;
+}
+
+function cancelPendingBooking($bookingId, $userId) {
+    $conn = dbConnect();
+
+    // Ensure booking belongs to user AND is Pending
+    $checkSql = "SELECT id FROM bookings
+                 WHERE id = ? AND user_id = ? AND status = 'Pending'
+                 LIMIT 1";
+    $check = $conn->prepare($checkSql);
+    $check->bind_param("ii", $bookingId, $userId);
+    $check->execute();
+
+    $res = $check->get_result();
+    if ($res->num_rows === 0) {
+        $check->close();
+        $conn->close();
+        return ["ok" => false, "error" => "Only Pending bookings can be cancelled."];
+    }
+    $check->close();
+
+    // Cancel booking
+    $sql = "UPDATE bookings SET status = 'Cancelled' WHERE id = ? AND user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $bookingId, $userId);
+    $ok = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+
+    if ($ok) return ["ok" => true];
+    return ["ok" => false, "error" => "Cancel failed. Try again."];
+}
