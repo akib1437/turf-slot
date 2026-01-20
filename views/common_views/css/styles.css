@@ -30,9 +30,14 @@
   --success: #22c55e;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 
 body {
   margin: 0;
@@ -43,7 +48,8 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* optional, looks nice on desktop */
+  background-attachment: fixed;
+  /* optional, looks nice on desktop */
 
   /* Typography */
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
@@ -63,7 +69,8 @@ body::before {
 }
 
 /* Ensure page content stays above overlay */
-.page, .container {
+.page,
+.container {
   position: relative;
   z-index: 1;
 }
@@ -108,14 +115,18 @@ body::before {
 }
 
 /* Form styles */
-.form label, label {
+.form label,
+label {
   display: block;
   margin: 12px 0 6px 0;
   font-size: 14px;
   color: var(--text);
 }
 
-.form input, .form select, input, select {
+.form input,
+.form select,
+input,
+select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
@@ -127,11 +138,19 @@ body::before {
   outline: none;
 }
 
-.form input::placeholder, input::placeholder {
+.form select>option {
+  color: black;
+}
+
+.form input::placeholder,
+input::placeholder {
   color: var(--placeholder);
 }
 
-.form input:focus, .form select:focus, input:focus, select:focus {
+.form input:focus,
+.form select:focus,
+input:focus,
+select:focus {
   border-color: rgba(47, 107, 255, 0.65);
   box-shadow: 0 0 0 4px rgba(47, 107, 255, 0.25);
 }
@@ -152,8 +171,14 @@ body::before {
   transition: transform 0.12s ease, background 0.12s ease, opacity 0.12s ease;
 }
 
-.btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
-.btn:active { transform: translateY(0px); }
+.btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0px);
+}
 
 /* Alerts */
 .alert {
@@ -189,12 +214,26 @@ body::before {
   font-weight: 700;
 }
 
-.footer-text a:hover { text-decoration: underline; }
+.footer-text a:hover {
+  text-decoration: underline;
+}
 
 /* Mobile */
 @media (max-width: 480px) {
-  body { background-attachment: scroll; }
-  .card { border-radius: 16px; padding: 18px; }
-  .title { font-size: 34px; }
-  .subtitle { font-size: 14px; }
+  body {
+    background-attachment: scroll;
+  }
+
+  .card {
+    border-radius: 16px;
+    padding: 18px;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
 }
