@@ -145,3 +145,154 @@ function cancelPendingBooking($bookingId, $userId) {
     if ($ok) return ["ok" => true];
     return ["ok" => false, "error" => "Cancel failed. Try again."];
 }
+// ===== Day 6 additions (Manager features) =====
+
+function getPendingBookingRequests() {
+    $conn = dbConnect();
+
+    $sql = "SELECT
+                b.id AS booking_id,
+                b.user_id,
+                b.slot_id,
+                b.team_name,
+                b.phone,
+                b.status,
+                b.created_at,
+                u.name AS customer_name,
+                u.email AS customer_email,
+                s.slot_date,
+                s.start_time,
+                s.end_time
+            FROM bookings b
+            INNER JOIN users u ON b.user_id = u.id
+            INNER JOIN slots s ON b.slot_id = s.id
+            WHERE b.status = 'Pending'
+            ORDER BY s.slot_date ASC, s.start_time ASC, b.created_at ASC";
+
+    $result = $conn->query($sql);
+    $rows = [];
+
+    if ($result) {
+        while ($r = $result->fetch_assoc()) {
+            $rows[] = $r;
+        }
+    }
+
+    $conn->close();
+    return $rows;
+}
+
+function getBookingById($bookingId) {
+    $conn = dbConnect();
+
+    $sql = "SELECT id, slot_id, status FROM bookings WHERE id = ? LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $bookingId);
+    $stmt->execute();
+
+    $res = $stmt->get_result();
+    $row = $res->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+
+    return $row ? $row : null;
+}
+
+function isSlotAlreadyApproved($slotId) {
+    $conn = dbConnect();
+
+    $sql = "SELECT id FROM bookings WHERE slot_id = ? AND status = 'Approved' LIMIT 1";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $slotId);
+    $stmt->execute();
+
+    $res = $stmt->get_result();
+    $exists = $res->num_rows > 0;
+
+    $stmt->close();
+    $conn->close();
+
+    return $exists;
+}
+
+function approveBooking($bookingId) {
+    $booking = getBookingById($bookingId);
+    if (!$booking) return ["ok" => false, "error" => "Booking not found."];
+
+    if ($booking["status"] !== "Pending") {
+        return ["ok" => false, "error" => "Only Pending bookings can be approved."];
+    }
+
+    $slotId = (int)$booking["slot_id"];
+    if (isSlotAlreadyApproved($slotId)) {
+        return ["ok" => false, "error" => "This slot already has an Approved booking."];
+    }
+
+    $conn = dbConnect();
+    $sql = "UPDATE bookings SET status = 'Approved' WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $bookingId);
+    $ok = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+
+    if ($ok) return ["ok" => true];
+    return ["ok" => false, "error" => "Approve failed."];
+}
+
+function rejectBooking($bookingId) {
+    $booking = getBookingById($bookingId);
+    if (!$booking) return ["ok" => false, "error" => "Booking not found."];
+
+    if ($booking["status"] !== "Pending") {
+        return ["ok" => false, "error" => "Only Pending bookings can be rejected."];
+    }
+
+    $conn = dbConnect();
+    $sql = "UPDATE bookings SET status = 'Rejected' WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $bookingId);
+    $ok = $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+
+    if ($ok) return ["ok" => true];
+    return ["ok" => false, "error" => "Reject failed."];
+}
+
+function getApprovedBookingsByDate($date) {
+    $conn = dbConnect();
+
+    $sql = "SELECT
+                b.id AS booking_id,
+                b.team_name,
+                b.phone,
+                u.name AS customer_name,
+                u.email AS customer_email,
+                s.slot_date,
+                s.start_time,
+                s.end_time
+            FROM bookings b
+            INNER JOIN users u ON b.user_id = u.id
+            INNER JOIN slots s ON b.slot_id = s.id
+            WHERE b.status = 'Approved' AND s.slot_date = ?
+            ORDER BY s.start_time ASC";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $date);
+    $stmt->execute();
+
+    $res = $stmt->get_result();
+    $rows = [];
+    while ($r = $res->fetch_assoc()) {
+        $rows[] = $r;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $rows;
+}
