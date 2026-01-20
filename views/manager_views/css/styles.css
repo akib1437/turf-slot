@@ -1,45 +1,31 @@
 /* views/manager_views/css/styles.css */
-
-:root {
-  --bg: #0f172a;
-  --card: #111827;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
-  --border: #253047;
-  --primary: #2563eb;
-  --danger: #ef4444;
-  --success: #22c55e;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
+/* Manager ADDONS only (global theme comes from ../common_views/css/styles.css) */
 
 .page { min-height: 100vh; }
 
+/* Glass topbar */
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-  background: #0b1220;
+
+  background: rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-.brand { font-weight: bold; }
+.brand { font-weight: 700; letter-spacing: 0.2px; }
 
 .top-actions .link {
-  color: var(--text);
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
   margin-left: 12px;
   font-size: 14px;
+  font-weight: 600;
 }
-
 .top-actions .link:hover { text-decoration: underline; }
 
 .content {
@@ -48,54 +34,9 @@ body {
   margin: 0 auto;
 }
 
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  max-width: 520px;
-}
-
-.alert {
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin: 12px 0;
-  font-size: 14px;
-}
-
-.alert.error {
-  border: 1px solid rgba(239, 68, 68, 0.5);
-  background: rgba(239, 68, 68, 0.1);
-  color: #fecaca;
-}
-
-.alert.success {
-  border: 1px solid rgba(34, 197, 94, 0.5);
-  background: rgba(34, 197, 94, 0.1);
-  color: #bbf7d0;
-}
-
-label { display: block; margin: 10px 0 6px; }
-
-input {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: #0b1220;
-  color: var(--text);
-}
-
-.btn {
-  margin-top: 14px;
-  padding: 10px 12px;
-  border: none;
-  border-radius: 8px;
-  background: var(--primary);
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-}
+/* Use global .card, but allow bigger cards */
+.card { max-width: 520px; }
+.card.wide { max-width: 980px; }
 
 .grid {
   display: grid;
@@ -104,97 +45,71 @@ input {
   margin-top: 16px;
 }
 
+/* Menu cards */
 .menu-card {
   display: block;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
   padding: 14px;
-  color: var(--text);
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 10px 40px rgba(0,0,0,0.18);
 }
 
 .menu-card p {
   margin: 6px 0 0;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.72);
   font-size: 14px;
 }
 
-/* ===== Day 3 additions (tables + wide cards) ===== */
-
-.card.wide {
-  max-width: 980px;
-}
-
+/* Day additions: table + actions */
 .row {
   display: flex;
   gap: 12px;
   align-items: end;
   flex-wrap: wrap;
 }
+.col { flex: 1; min-width: 180px; }
+.btn-col { flex: 0; min-width: 160px; }
 
-.col {
-  flex: 1;
-  min-width: 180px;
-}
+.hint { margin: 10px 0 0; color: rgba(255,255,255,0.72); font-size: 13px; }
+.muted { color: rgba(255,255,255,0.72); }
 
-.btn-col {
-  flex: 0;
-  min-width: 160px;
-}
-
-.hint {
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.muted {
-  color: var(--muted);
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
+.table-wrap { overflow-x: auto; }
 .table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
 }
-
 .table th, .table td {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
   padding: 10px;
   text-align: left;
   font-size: 14px;
 }
 
-.actions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.inline {
-  display: inline-block;
-  margin: 0;
-}
+.actions { display: flex; gap: 8px; align-items: center; }
+.inline { display: inline-block; margin: 0; }
 
 .btn-small {
   display: inline-block;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--primary);
   color: #fff;
   text-decoration: none;
   border: none;
   cursor: pointer;
   font-size: 13px;
+  font-weight: 700;
 }
-
 .btn-small:hover { opacity: 0.92; }
-
-.btn-small.danger {
-  background: var(--danger);
-}
+.btn-small.danger { background: var(--danger); }
