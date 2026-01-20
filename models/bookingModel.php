@@ -98,11 +98,12 @@ function getBookingsByUser($userId) {
             ORDER BY s.slot_date DESC, s.start_time DESC, b.created_at DESC";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param(\"i\", $userId);
+    $stmt->bind_param("i", $userId);   // IMPORTANT: no backslashes here
     $stmt->execute();
 
     $result = $stmt->get_result();
     $bookings = [];
+
     while ($row = $result->fetch_assoc()) {
         $bookings[] = $row;
     }

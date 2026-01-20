@@ -174,3 +174,26 @@ input {
   background: rgba(239, 68, 68, 0.1);
   color: #fecaca;
 }
+
+/* ===== Day 5 additions (status badge colors + cancel button) ===== */
+
+.badge.warn {
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.1);
+  color: #fde68a;
+}
+
+.badge.gray {
+  border: 1px solid rgba(156, 163, 175, 0.5);
+  background: rgba(156, 163, 175, 0.1);
+  color: #e5e7eb;
+}
+
+.inline {
+  display: inline-block;
+  margin: 0;
+}
+
+.btn-small.danger {
+  background: var(--danger);
+}
