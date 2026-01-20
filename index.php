@@ -1,28 +1,28 @@
 <?php
-// Very simple router for Day 1 UI testing
-// Usage example: /index.php?c=auth&a=login
+// index.php (project root)
+session_start();
 
-$c = isset($_GET['c']) ? $_GET['c'] : 'auth';
-$a = isset($_GET['a']) ? $_GET['a'] : 'login';
-
-// Map controller/action to view files (UI only)
-$routes = [
-  'auth' => [
-    'login'    => __DIR__ . '/../app/views/auth/login.php',
-    'register' => __DIR__ . '/../app/views/auth/register.php',
-  ],
-  'manager' => [
-    'slotsManage'   => __DIR__ . '/../app/views/manager/slots_manage.php',
-    'requests'      => __DIR__ . '/../app/views/manager/requests.php',
-    'dailySchedule' => __DIR__ . '/../app/views/manager/daily_schedule.php',
-  ],
-];
-
-// Fallback if route not found
-if (!isset($routes[$c]) || !isset($routes[$c][$a])) {
-  echo "Page not found.";
-  exit;
+// If not logged in, go to login page
+if (!isset($_SESSION["user_id"])) {
+    header("Location: views/common_views/login.php");
+    exit();
 }
 
-// Load the view
-require $routes[$c][$a];
+// If logged in, redirect based on role
+$role = $_SESSION["role"] ?? "";
+
+if ($role === "manager") {
+    header("Location: views/manager_views/home.php");
+    exit();
+}
+
+if ($role === "customer") {
+    header("Location: views/customer_views/home.php");
+    exit();
+}
+
+// Fallback (session role missing)
+session_unset();
+session_destroy();
+header("Location: views/common_views/login.php?err=Please login again");
+exit();
