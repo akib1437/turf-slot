@@ -1,11 +1,10 @@
 <?php
-// models/dbConnect.php
 
 function dbConnect() {
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $db   = "turfslot_db"; // change if your DB name is different
+    $db   = "turfslot_db"; 
 
     $conn = new mysqli($host, $user, $pass, $db);
 

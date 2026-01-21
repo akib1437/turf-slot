@@ -1,9 +1,6 @@
-/* views/manager_views/css/styles.css */
-/* Manager ADDONS only (global theme comes from ../common_views/css/styles.css) */
 
 .page { min-height: 100vh; }
 
-/* Glass topbar */
 .topbar {
   display: flex;
   align-items: center;
@@ -34,7 +31,6 @@
   margin: 0 auto;
 }
 
-/* Use global .card, but allow bigger cards */
 .card { max-width: 520px; }
 .card.wide { max-width: 980px; }
 
@@ -67,7 +63,6 @@
   font-size: 14px;
 }
 
-/* Day additions: table + actions */
 .row {
   display: flex;
   gap: 12px;

@@ -1,5 +1,4 @@
 <?php
-// models/userModel.php
 
 require_once __DIR__ . "/dbConnect.php";
 
@@ -23,7 +22,7 @@ function getUserByEmail($email) {
 function createUser($name, $email, $phone, $passwordHash, $role) {
     $conn = dbConnect();
 
-    // If email exists, stop
+    
     $existing = getUserByEmail($email);
     if ($existing) {
         return ["ok" => false, "error" => "Email already exists."];
@@ -44,7 +43,7 @@ function createUser($name, $email, $phone, $passwordHash, $role) {
     return ["ok" => false, "error" => "Registration failed. Try again."];
 }
 
-// ===== Day 2 additions (Profile + Fetch by ID) =====
+// =====  For Profile Update =====
 
 function getUserById($id) {
     $conn = dbConnect();

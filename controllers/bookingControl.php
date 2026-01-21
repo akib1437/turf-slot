@@ -1,5 +1,4 @@
 <?php
-// controllers/bookingControl.php
 
 session_start();
 require_once __DIR__ . "/../models/bookingModel.php";
@@ -23,9 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $action = $_POST["action"] ?? "";
 
-/* =========================
-   CUSTOMER ACTIONS
-   ========================= */
+
 if ($_SESSION["role"] === "customer") {
 
     $userId = (int)$_SESSION["user_id"];
@@ -65,9 +62,7 @@ if ($_SESSION["role"] === "customer") {
     redirectTo("../views/customer_views/home.php?err=Invalid action");
 }
 
-/* =========================
-   MANAGER ACTIONS
-   ========================= */
+
 if ($_SESSION["role"] === "manager") {
 
     if ($action === "approve_booking") {

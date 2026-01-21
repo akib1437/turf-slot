@@ -1,5 +1,4 @@
 <?php
-// views/customer_views/myBookings.php
 session_start();
 
 require_once __DIR__ . "/../../models/bookingModel.php";

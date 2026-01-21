@@ -1,5 +1,4 @@
 <?php
-// views/manager_views/dailySchedule.php
 session_start();
 require_once __DIR__ . "/../../models/bookingModel.php";
 

@@ -1,5 +1,4 @@
 <?php
-// controllers/authControl.php
 
 session_start();
 
@@ -14,14 +13,14 @@ function clean($value) {
     return trim($value);
 }
 
-// Logout (GET)
+// Logout 
 if (isset($_GET["action"]) && $_GET["action"] === "logout") {
     session_unset();
     session_destroy();
     redirect("../views/common_views/login.php?msg=logout");
 }
 
-// Only POST below
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirect("../views/common_views/login.php?err=Invalid request");
 }
@@ -74,12 +73,12 @@ if ($action === "login") {
         redirect("../views/common_views/login.php?err=Invalid email or password");
     }
 
-    // session set
+
     $_SESSION["user_id"] = $user["id"];
     $_SESSION["name"] = $user["name"];
     $_SESSION["role"] = $user["role"];
 
-    // redirect by role
+ 
     if ($user["role"] === "manager") {
         redirect("../views/manager_views/home.php");
     } else {
@@ -87,5 +86,5 @@ if ($action === "login") {
     }
 }
 
-// Unknown action
+
 redirect("../views/common_views/login.php?err=Invalid action");

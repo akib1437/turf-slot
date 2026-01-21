@@ -1,9 +1,7 @@
-/* views/customer_views/css/styles.css */
-/* Customer ADDONS only (global theme comes from ../common_views/css/styles.css) */
+
 
 .page { min-height: 100vh; }
 
-/* Glass topbar */
 .topbar {
   display: flex;
   align-items: center;
@@ -34,11 +32,9 @@
   margin: 0 auto;
 }
 
-/* Use global .card, but allow bigger cards */
 .card { max-width: 520px; }
 .card.wide { max-width: 980px; }
 
-/* Menu cards should also look glassy */
 .menu-card {
   display: block;
   background: rgba(255, 255, 255, 0.10);
@@ -67,7 +63,6 @@
   margin-top: 16px;
 }
 
-/* Tables + layout helpers */
 .row {
   display: flex;
   gap: 12px;
@@ -93,7 +88,6 @@
   font-size: 14px;
 }
 
-/* Small buttons */
 .btn-small {
   display: inline-block;
   padding: 8px 10px;
@@ -107,7 +101,6 @@
 .btn-small:hover { opacity: 0.92; }
 .btn-small.danger { background: var(--danger); }
 
-/* Badges */
 .badge {
   display: inline-block;
   padding: 4px 8px;

@@ -1,4 +1,3 @@
-// views/common_views/js/script.js
 
 function showAlert(message) {
   alert(message);

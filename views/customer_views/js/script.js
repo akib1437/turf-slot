@@ -1,4 +1,3 @@
-// views/customer_views/js/script.js
 
 document.addEventListener("DOMContentLoaded", function () {
   // Profile validation
