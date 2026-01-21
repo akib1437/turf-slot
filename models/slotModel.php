@@ -1,12 +1,11 @@
 <?php
-// models/slotModel.php
 
 require_once __DIR__ . "/dbConnect.php";
 
 function createSlot($slotDate, $startTime, $endTime) {
     $conn = dbConnect();
 
-    // Check duplicate (same date + same time range)
+    // Check duplicate 
     $checkSql = "SELECT id FROM slots WHERE slot_date = ? AND start_time = ? AND end_time = ?";
     $check = $conn->prepare($checkSql);
     $check->bind_param("sss", $slotDate, $startTime, $endTime);
@@ -74,7 +73,7 @@ function getSlotById($slotId) {
 function updateSlot($slotId, $slotDate, $startTime, $endTime) {
     $conn = dbConnect();
 
-    // Check duplicate excluding same slot id
+    // Check duplicate 
     $checkSql = "SELECT id FROM slots
                  WHERE slot_date = ? AND start_time = ? AND end_time = ? AND id != ?";
     $check = $conn->prepare($checkSql);

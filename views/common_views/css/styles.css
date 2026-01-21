@@ -1,29 +1,26 @@
-/* views/common_views/css/styles.css */
-/* GLOBAL THEME: background + overlay + glass UI (used by ALL pages) */
+
+/* GLOBAL THEME */ 
 
 :root {
-  /* CHANGE ONLY THIS if you want a different background image later */
+
   --bg-image: url("../img/background.png");
 
-  /* Overlay darkness (0.20–0.40 recommended) */
+
   --overlay: rgba(0, 0, 0, 0.35);
 
-  /* Glass */
+
   --glass-bg: rgba(255, 255, 255, 0.12);
   --glass-border: rgba(255, 255, 255, 0.18);
   --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
   --radius: 20px;
 
-  /* Text */
   --text: rgba(255, 255, 255, 0.92);
   --muted: rgba(255, 255, 255, 0.72);
   --placeholder: rgba(255, 255, 255, 0.55);
 
-  /* Inputs */
   --input-bg: rgba(255, 255, 255, 0.10);
   --input-border: rgba(255, 255, 255, 0.18);
 
-  /* Colors */
   --primary: #19af14;
   --primary-hover: #179d12;
   --danger: #ef4444;
@@ -43,22 +40,22 @@ body {
   margin: 0;
   min-height: 100vh;
 
-  /* Background image on EVERY page */
+
   background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  /* optional, looks nice on desktop */
 
-  /* Typography */
+
+
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
   color: var(--text);
 
   position: relative;
 }
 
-/* Dark overlay for readability */
+
 body::before {
   content: "";
   position: fixed;
@@ -68,14 +65,14 @@ body::before {
   z-index: 0;
 }
 
-/* Ensure page content stays above overlay */
+
 .page,
 .container {
   position: relative;
   z-index: 1;
 }
 
-/* Centered container (Login/Register) */
+
 .container {
   min-height: 100vh;
   display: flex;
@@ -84,7 +81,6 @@ body::before {
   padding: 24px;
 }
 
-/* Glass card (used everywhere: login + dashboard cards) */
 .card {
   width: 100%;
   max-width: 420px;
@@ -100,7 +96,6 @@ body::before {
   padding: 22px;
 }
 
-/* Titles (login/register) */
 .title {
   margin: 0 0 6px 0;
   font-size: 40px;
@@ -114,7 +109,6 @@ body::before {
   font-size: 15px;
 }
 
-/* Form styles */
 .form label,
 label {
   display: block;
@@ -155,7 +149,6 @@ select:focus {
   box-shadow: 0 0 0 4px rgba(47, 107, 255, 0.25);
 }
 
-/* Primary button */
 .btn {
   width: 100%;
   margin-top: 16px;
@@ -180,7 +173,6 @@ select:focus {
   transform: translateY(0px);
 }
 
-/* Alerts */
 .alert {
   padding: 10px 12px;
   border-radius: 10px;
@@ -200,7 +192,6 @@ select:focus {
   color: rgba(255, 255, 255, 0.92);
 }
 
-/* Footer text (login/register) */
 .footer-text {
   margin-top: 14px;
   font-size: 14px;
@@ -218,7 +209,6 @@ select:focus {
   text-decoration: underline;
 }
 
-/* Mobile */
 @media (max-width: 480px) {
   body {
     background-attachment: scroll;

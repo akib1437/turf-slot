@@ -1,11 +1,7 @@
 <?php
-// models/bookingModel.php
 
 require_once __DIR__ . "/dbConnect.php";
 
-/*
-  A slot is considered NOT available if there is an APPROVED booking for that slot_id.
-*/
 
 function isSlotAvailable($slotId) {
     $conn = dbConnect();
@@ -27,7 +23,7 @@ function isSlotAvailable($slotId) {
 function createBookingRequest($userId, $slotId, $teamName, $phone) {
     $conn = dbConnect();
 
-    // Basic check: slot must exist
+   
     $checkSlotSql = "SELECT id FROM slots WHERE id = ? LIMIT 1";
     $check = $conn->prepare($checkSlotSql);
     $check->bind_param("i", $slotId);
@@ -40,7 +36,7 @@ function createBookingRequest($userId, $slotId, $teamName, $phone) {
     }
     $check->close();
 
-    // Check if already approved for that slot
+    // Check if already approved 
     $checkApprovedSql = "SELECT id FROM bookings WHERE slot_id = ? AND status = 'Approved' LIMIT 1";
     $chk2 = $conn->prepare($checkApprovedSql);
     $chk2->bind_param("i", $slotId);
@@ -53,7 +49,7 @@ function createBookingRequest($userId, $slotId, $teamName, $phone) {
     }
     $chk2->close();
 
-    // Optional: prevent duplicate pending from same user for same slot
+    // prevent duplicate pending 
     $dupSql = "SELECT id FROM bookings WHERE user_id = ? AND slot_id = ? AND status = 'Pending' LIMIT 1";
     $dup = $conn->prepare($dupSql);
     $dup->bind_param("ii", $userId, $slotId);
@@ -78,7 +74,7 @@ function createBookingRequest($userId, $slotId, $teamName, $phone) {
     if ($ok) return ["ok" => true];
     return ["ok" => false, "error" => "Failed to request booking."];
 }
-// ===== Day 5 additions =====
+// ===== For Cancel Booking =====
 
 function getBookingsByUser($userId) {
     $conn = dbConnect();
@@ -98,7 +94,7 @@ function getBookingsByUser($userId) {
             ORDER BY s.slot_date DESC, s.start_time DESC, b.created_at DESC";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $userId);   // IMPORTANT: no backslashes here
+    $stmt->bind_param("i", $userId);   
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -117,7 +113,7 @@ function getBookingsByUser($userId) {
 function cancelPendingBooking($bookingId, $userId) {
     $conn = dbConnect();
 
-    // Ensure booking belongs to user AND is Pending
+    
     $checkSql = "SELECT id FROM bookings
                  WHERE id = ? AND user_id = ? AND status = 'Pending'
                  LIMIT 1";
@@ -145,7 +141,7 @@ function cancelPendingBooking($bookingId, $userId) {
     if ($ok) return ["ok" => true];
     return ["ok" => false, "error" => "Cancel failed. Try again."];
 }
-// ===== Day 6 additions (Manager features) =====
+// ===== Approve/Reject Booking =====
 
 function getPendingBookingRequests() {
     $conn = dbConnect();

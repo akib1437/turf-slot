@@ -1,5 +1,4 @@
 <?php
-// views/manager_views/editSlot.php
 session_start();
 require_once __DIR__ . "/../../models/slotModel.php";
 

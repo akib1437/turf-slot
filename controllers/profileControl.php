@@ -1,5 +1,4 @@
 <?php
-// controllers/profileControl.php
 
 session_start();
 require_once __DIR__ . "/../models/userModel.php";
@@ -53,7 +52,7 @@ if (!$okInfo) {
     }
 }
 
-// If user typed password, update it
+
 if ($newPass !== "") {
     if (strlen($newPass) < 6) {
         if ($_SESSION["role"] === "manager") {
@@ -75,7 +74,7 @@ if ($newPass !== "") {
     }
 }
 
-// Update session name (so navbar/home shows updated name)
+// Update session name 
 $_SESSION["name"] = $name;
 
 // Redirect success

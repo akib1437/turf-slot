@@ -1,5 +1,4 @@
 <?php
-// views/customer_views/profile.php
 session_start();
 require_once __DIR__ . "/../../models/userModel.php";
 
@@ -65,7 +64,7 @@ $err = $_GET["err"] ?? "";
           <label>Phone</label>
           <input type="text" name="phone" id="pPhone" value="<?php echo htmlspecialchars($user["phone"]); ?>" required>
 
-          <label>New Password (optional)</label>
+          <label>New Password</label>
           <input type="password" name="new_password" id="pPass" placeholder="Leave empty to keep old password">
 
           <button type="submit" class="btn">Update Profile</button>

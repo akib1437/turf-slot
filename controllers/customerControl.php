@@ -1,5 +1,4 @@
 <?php
-// controllers/customerControl.php
 
 session_start();
 

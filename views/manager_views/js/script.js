@@ -1,11 +1,10 @@
-// views/manager_views/js/script.js
 
 function confirmDelete() {
   return confirm("Are you sure you want to delete this slot?");
 }
 
 function isTimeRangeValid(start, end) {
-  // "HH:MM" strings compare correctly if same format
+  // "HH:MM" 
   return start && end && start < end;
 }
 

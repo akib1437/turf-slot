@@ -1,5 +1,4 @@
 <?php
-// controllers/managerControl.php
 
 session_start();
 require_once __DIR__ . "/../models/slotModel.php";
@@ -14,11 +13,11 @@ function clean($v) {
 }
 
 function isValidTimeRange($start, $end) {
-    // Simple validation: end must be after start
+    
     return strtotime($end) > strtotime($start);
 }
 
-// Must be logged in as manager
+
 if (!isset($_SESSION["user_id"])) {
     redirectTo("../views/common_views/login.php?err=Please login first");
 }
@@ -26,7 +25,6 @@ if ($_SESSION["role"] !== "manager") {
     redirectTo("../views/common_views/login.php?err=Access denied");
 }
 
-// Only POST actions for CRUD
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     redirectTo("../views/manager_views/home.php?err=Invalid request");
 }

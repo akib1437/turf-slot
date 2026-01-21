@@ -1,9 +1,8 @@
 <?php
-// views/common_views/login.php
 session_start();
 
 if (isset($_SESSION['user_id'])) {
-    // Already logged in - redirect by role
+
     if ($_SESSION['role'] === 'manager') {
         header("Location: ../manager_views/home.php");
         exit();
